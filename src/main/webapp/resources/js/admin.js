@@ -87,13 +87,25 @@ function getUser() {
 		document.getElementById("username").placeholder = "A username is REQUIRED!";
 	} else {
 		console.log("username: ", username);
-		//$http.get();
-		var data = $.ajax({
+		
+		//var data = "";
+		$.ajax({
+			type:"GET",
 			url:baseUrl + "/user/" + username,
-			dataType:"json",
-			context:document.body
+			//data:data,
+			//dataType:"json",
+			success: function(data){
+				console.log(data)
+			}
 		});
-		console.log("data: ", data);
+		
+//		var responseJson = data.responseJSON;
+//		var responseText = data.responseText;
+//		var responseData = data["responseJSON"];
+//		console.log("data: ", data);
+//		console.log("responseJson: ", responseJson);
+//		console.log("responseText: ", responseText);
+//		console.log("responseData: ", responseData);
 	}
 	
 	
