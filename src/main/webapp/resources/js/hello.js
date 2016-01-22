@@ -52,7 +52,9 @@ var firstModule = angular.module('hello', [ 'ngRoute' ])
 	  authenticate();
 	  $scope.credentials = {};
 	  $scope.login = function() {
+		  console.log("login()???");
 	      authenticate($scope.credentials, function() {
+	    	  console.log("authenticate()???");
 	        if ($rootScope.authenticated) {
 	          $location.path("/");
 	          $scope.error = false;

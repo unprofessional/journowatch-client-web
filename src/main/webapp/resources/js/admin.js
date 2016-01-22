@@ -18,17 +18,6 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 	
 	$httpProvider.defaults.headers.common["X-Requested-With"]='XMLHttpRequest';
 	
-})
-.controller('home', function($scope, $http) {
-	$http.get('resource/').success(function(data) {
-		console.log(data);
-		$scope.greeting = data;
-	})
-}).controller('user', function($scope, $http) {
-	$http.get('user/').success(function(data) {
-		console.log(data);
-		$scope.stuff = data;
-	})
 }).controller('navigation', 
 		function($rootScope, $scope, $http, $location) {
 
@@ -42,9 +31,13 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 	    console.log("navigation headers: ", headers);
 
 	    // This reads JSON data from the provided URL
-	    $http.get('user', {headers : headers}).success(function(data) {
+	    
+	    // XXX
+	    // TODO: is this even correct?  no idea what i'm doing here
+	    // XXX
+	    $http.get('portal', {headers : headers}).success(function(data) {
 	    	
-	    	console.log("navigation data: ", data)
+	    	//console.log("navigation data: ", data)
 	    	
 	      if (data.name) {
 	        $rootScope.authenticated = true;
@@ -73,11 +66,10 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 	        }
 	      });
 	  };
-}).controller('findUser', function($scope, $http) {
-	$http.get(baseUrl + '/user/' + "regularsage").success(function(data) {
-		console.log(data);
-		$scope.stuff = data;
-	})
+	  $scope.findUser = function() {
+		  console.log("findUser()???");
+		  
+	  };
 });
 
 function setHidden() {
@@ -95,7 +87,13 @@ function getUser() {
 		document.getElementById("username").placeholder = "A username is REQUIRED!";
 	} else {
 		console.log("username: ", username);
-		$http.get();
+		//$http.get();
+		var data = $.ajax({
+			url:baseUrl + "/user/" + username,
+			dataType:"json",
+			context:document.body
+		});
+		console.log("data: ", data);
 	}
 	
 	
