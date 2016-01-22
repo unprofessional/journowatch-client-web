@@ -1,5 +1,7 @@
 var baseUrl = "http://journowatchapi-sjw.rhcloud.com";
 
+var fieldsInList = { email:"email", firstname:"firstname", lastname:"lastname" };
+
 var firstModule = angular.module('admin', [ 'ngRoute' ])
 .config(function($routeProvider, $httpProvider) {
 	$routeProvider.when('/', {
@@ -72,6 +74,10 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 	  };
 });
 
+function setPlaceholder(text) {
+	document.getElementById("username").placeholder = text;
+}
+
 function setHidden() {
 	document.getElementById("user-results").style.visibility = "hidden";
 }
@@ -80,32 +86,37 @@ function setVisible() {
 	document.getElementById("user-results").style.visibility = "visible";
 }
 
+function setText(respObj) {
+	for(var k in fieldsInList) {
+		document.getElementById(fieldsInList[k]).value = respObj[k];
+	}
+}
+
 function getUser() {
+	//console.log("getUser!");
 	var username = document.getElementById("username").value;
 	if(username === "") {
-		console.log("username is empty!");
+		//console.log("username is empty!");
 		document.getElementById("username").placeholder = "A username is REQUIRED!";
 	} else {
-		console.log("username: ", username);
+		//console.log("username: ", username);
 		
-		//var data = "";
 		$.ajax({
 			type:"GET",
 			url:baseUrl + "/user/" + username,
-			//data:data,
-			//dataType:"json",
 			success: function(data){
-				console.log(data)
+				console.log(data);
+				if(data.uuid !== null) {
+					//console.log("ajax GET!");
+					setVisible();
+					setText(data);
+					// Set values
+				} else {
+					setHidden();
+					console.log("uuid is null!");
+				}
 			}
 		});
-		
-//		var responseJson = data.responseJSON;
-//		var responseText = data.responseText;
-//		var responseData = data["responseJSON"];
-//		console.log("data: ", data);
-//		console.log("responseJson: ", responseJson);
-//		console.log("responseText: ", responseText);
-//		console.log("responseData: ", responseData);
 	}
 	
 	
