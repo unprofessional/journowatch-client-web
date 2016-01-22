@@ -1,0 +1,27 @@
+<div class="alert alert-danger" ng-show="error">Could not find user.</div>
+<!-- <form role="form" ng-submit="setHidden()"> -->
+
+	<br><br>
+	<div class="form-group">
+		<label for="username">Look up username:</label> <input type="text"
+			class="form-control" id="username" name="username"
+			ng-model="user.username" required="required"/>
+	</div>
+	<button type="submit" class="btn btn-primary" onclick="setHidden()">Hide</button>
+	<button type="submit" class="btn btn-primary" onclick="setVisible()">Show</button>
+	<button type="submit" class="btn btn-primary" onclick="getUser()">Submit</button>
+	
+	<br><br><br><br>
+	<div id="user-results" class="form-group" style="visibility:hidden;">
+	<p><label for="email">email:</label> <input type="email"
+			class="form-control" id="email" name="email"
+			ng-model="user.email" required/></p>
+	<p><label for="firstname">first name:</label> <input type="firstname"
+			class="form-control" id="firstname" name="firstname"
+			ng-model="user.firstname" required/></p>
+	<p><label for="lastname">last name:</label> <input type="lastname"
+			class="form-control" id="lastname" name="lastname"
+			ng-model="user.lastname" required/></p>
+	<p><button type="submit" class="btn btn-primary">Submit Changes</button></p>
+	</div>
+</form>
