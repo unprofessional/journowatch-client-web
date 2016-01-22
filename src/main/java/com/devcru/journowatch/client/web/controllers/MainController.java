@@ -31,17 +31,6 @@ public class MainController {
 	@Autowired
 	private Configuration freemarkerConfiguration;
 
-//	@RequestMapping(value = "/")
-//	@ResponseStatus(HttpStatus.OK)
-//	@ResponseBody
-//	public String getIndex() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException,
-//			IOException, TemplateException {
-//
-//		System.out.println("root hit!");
-//
-//		return processTemplateIntoString(freemarkerConfiguration.getTemplate("sample.ftl"), new Object());
-//	}
-
 	@RequestMapping(value = "/")
 	@ResponseStatus(HttpStatus.OK)
 	public String getHome() {
@@ -51,54 +40,42 @@ public class MainController {
 		return "/resources/views/index.html";
 	}
 
-	@RequestMapping(value = "/index/{stuff}")
-	@ResponseBody
-	public String thing(@PathVariable("stuff") String stuff) throws TemplateNotFoundException,
-			MalformedTemplateNameException, ParseException, IOException, TemplateException {
-
-		System.out.println("/index/{" + stuff + "} has been hit!");
-
-		return processTemplateIntoString(freemarkerConfiguration.getTemplate("sample.ftl"), new Object());
-	}
-
-	@RequestMapping(value = "/404")
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	// XXX: ^ Do we need this in the front-end.... maybe use only in the API?
-	@ResponseBody
-	public String get404() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException,
-			IOException, TemplateException {
-
-		System.out.println("404 hit!");
-
-		return processTemplateIntoString(freemarkerConfiguration.getTemplate("sample.ftl"), new Object());
-	}
-
-	@RequestMapping(value = "/resource")
-	@ResponseBody
-	public Map<String, Object> demoShit() {
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("id", UUID.randomUUID().toString());
-		model.put("content", "Hello World");
-		return model;
-	}
-
+//	@RequestMapping(value = "/index/{stuff}")
+//	@ResponseBody
+//	public String thing(@PathVariable("stuff") String stuff) throws TemplateNotFoundException,
+//			MalformedTemplateNameException, ParseException, IOException, TemplateException {
+//
+//		System.out.println("/index/{" + stuff + "} has been hit!");
+//
+//		return processTemplateIntoString(freemarkerConfiguration.getTemplate("sample.ftl"), new Object());
+//	}
+//
+//	@RequestMapping(value = "/404")
+//	@ResponseStatus(HttpStatus.NOT_FOUND)
+//	// XXX: ^ Do we need this in the front-end.... maybe use only in the API?
+//	@ResponseBody
+//	public String get404() throws TemplateNotFoundException, MalformedTemplateNameException, ParseException,
+//			IOException, TemplateException {
+//
+//		System.out.println("404 hit!");
+//
+//		return processTemplateIntoString(freemarkerConfiguration.getTemplate("sample.ftl"), new Object());
+//	}
+//
+//	@RequestMapping(value = "/resource")
+//	@ResponseBody
+//	public Map<String, Object> demoShit() {
+//		Map<String, Object> model = new HashMap<String, Object>();
+//		model.put("id", UUID.randomUUID().toString());
+//		model.put("content", "Hello World");
+//		return model;
+//	}
+//	
 //	@RequestMapping(value = "/user")
 //	@ResponseBody
-//	public User getUserData() {
-//		User user = new User();
-//		user.setUuid(UUID.randomUUID());
-//		user.setUsername("regularsage");
-//		user.setFirstName("regular");
-//		user.setLastName("sage");
-//		user.setPassword("password");
+//	public Principal user(Principal user) {
 //		return user;
 //	}
-	
-	@RequestMapping(value = "/user")
-	@ResponseBody
-	public Principal user(Principal user) {
-		return user;
-	}
 
 	// TODO: Should we separate these into methods like getHeader() or
 	// getFooter()?

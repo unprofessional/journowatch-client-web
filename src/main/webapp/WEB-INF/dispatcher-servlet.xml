@@ -24,7 +24,9 @@
 		factory-bean="freeMarkerConfigurationFactory" factory-method="createConfiguration"
 		scope="prototype" />
 
+	<!-- For each URL subpath, add a new entry here (else the resource will 404) -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/admin/resources/**" location="/resources/" />
 	<!-- ALTERNATE location="classpath:/WEB-INF/public-resources/, classpath:/WEB-INF/private-resources/" -->
 
 	<mvc:annotation-driven />
