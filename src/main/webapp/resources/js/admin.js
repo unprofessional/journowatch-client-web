@@ -1,6 +1,6 @@
 var baseUrl = "http://journowatchapi-sjw.rhcloud.com";
 
-var fieldsInList = { email:"email", firstname:"firstname", lastname:"lastname" };
+var fieldsInList = { uuid:"uuid", email:"email", firstname:"firstname", lastname:"lastname" };
 
 var firstModule = angular.module('admin', [ 'ngRoute' ])
 .config(function($routeProvider, $httpProvider) {
@@ -68,9 +68,51 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 	        }
 	      });
 	  };
-	  $scope.findUser = function() {
-		  console.log("findUser()???");
+	  $scope.getUser = function() {
+		  var username = document.getElementById("username").value;
 		  
+		  if(username === "") {
+			  $scope.error = true; // Shows the error div
+			  document.getElementById("username").placeholder = "A username is REQUIRED!";
+		  } else {
+			  ajaxStuff({
+				  type:"GET",
+				  url:baseUrl + "/user/" + username,
+				  callback: function(data) {
+					  if(data.uuid !== null) {
+							setVisible();
+							setText(data);
+							// We need to use $scope.$apply() in order to maintain scope within AJAX
+							$scope.$apply(function(){
+								$scope.error = false;
+							});
+							//console.log("AJAX $scope.error: ", $scope.error);
+						} else {
+							setHidden();
+							console.log("uuid is null! Set the error div!");
+							document.getElementById("error-thing").textContent = "Could not find user.";
+							// We need to use $scope.$apply() in order to maintain scope within AJAX
+							$scope.$apply(function(){
+								$scope.error = true;
+							});
+							//console.log("AJAX $scope.error: ", $scope.error);
+						}
+				  }
+			  });
+		  }
+	  };
+	  // TODO: createUser() and deleteUser()
+	  $scope.updateUser = function() {
+		  var username = document.getElementById("username").value;
+		  // TODO: Should we use UUID here?
+		  console.log("updateUser() hit!");
+		  ajaxStuff({
+			  type:"PUT",
+			  url:baseUrl + "/user/" + username,
+			  callback: function(data) {
+				  
+			  }
+		  });
 	  };
 });
 
@@ -92,32 +134,13 @@ function setText(respObj) {
 	}
 }
 
-function getUser() {
-	//console.log("getUser!");
-	var username = document.getElementById("username").value;
-	if(username === "") {
-		//console.log("username is empty!");
-		document.getElementById("username").placeholder = "A username is REQUIRED!";
-	} else {
-		//console.log("username: ", username);
-		
-		$.ajax({
-			type:"GET",
-			url:baseUrl + "/user/" + username,
-			success: function(data){
-				console.log(data);
-				if(data.uuid !== null) {
-					//console.log("ajax GET!");
-					setVisible();
-					setText(data);
-					// Set values
-				} else {
-					setHidden();
-					console.log("uuid is null!");
-				}
-			}
-		});
-	}
-	
-	
+function ajaxStuff(config) {
+	return $.ajax({
+		type:config.type,
+		url:config.url,
+		success: function(data) {
+			if(typeof config.callback == "function") config.callback(data);
+			console.log("ajaxStuff callback: ", data);
+		}
+	});
 }

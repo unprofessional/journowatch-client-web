@@ -29,8 +29,6 @@ var firstModule = angular.module('hello', [ 'ngRoute' ])
 		var headers = credentials ? {authorization : "Basic "
 	        + btoa(credentials.username + ":" + credentials.password)
 	    } : {};
-	    
-	    console.log("navigation headers: ", headers);
 
 	    $http.get('user', {headers : headers}).success(function(data) {
 	    	
