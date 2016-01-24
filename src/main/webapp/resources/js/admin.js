@@ -1,6 +1,6 @@
 var baseUrl = "http://journowatchapi-sjw.rhcloud.com";
 
-var fieldsInList = { uuid:"uuid", email:"email", firstname:"firstname", lastname:"lastname" };
+var fieldsInList = { uuid:"uuid", email:"email", firstname:"firstname", lastname:"lastname", role:"role" };
 
 var firstModule = angular.module('admin', [ 'ngRoute' ])
 .config(function($routeProvider, $httpProvider) {
@@ -103,7 +103,7 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 	  };
 	  // TODO: createUser() and deleteUser()
 	  $scope.updateUser = function() {
-		  var username = document.getElementById("username").value;
+		  var uuid = document.getElementById("uuid").value;
 		  // TODO: Should we use UUID here?
 		  console.log("updateUser() hit!");
 		  ajaxStuff({
