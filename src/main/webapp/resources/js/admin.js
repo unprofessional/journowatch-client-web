@@ -18,7 +18,10 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 		controller:'navigation'
 	}).otherwise('/');
 	
-	$httpProvider.defaults.headers.common["X-Requested-With"]='XMLHttpRequest';
+	// CORS stuff
+	$httpProvider.defaults.useXDomain = true;
+	//$httpProvider.defaults.headers.common["X-Requested-With"]='XMLHttpRequest';
+	delete $httpProvider.defaults.headers.common["X-Requested-With"];
 	
 }).controller('navigation', 
 		function($rootScope, $scope, $http, $location) {
