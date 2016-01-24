@@ -130,10 +130,10 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 //			callback: function(data) {
 //				// do nothing?
 //			},
-			headers:{
-				//"Content-Type":"application/json",
-				"cors":"cors"
-					},
+//			headers:{
+//				//"Content-Type":"application/json",
+//				"cors":"cors"
+//					},
 			dataType:"json",
 		  	data:formData
 		  });
@@ -164,6 +164,12 @@ function ajaxStuff(config) {
 		url:config.url,
 		dataType:config.dataType,
 		data:config.data,
+		
+		contentType: "application/json; charset=utf-8",
+		crossDomain:true,
+		headers: { 'Access-Control-Allow-Origin': '*' },
+		
+		//origin:"",
 		success: function(data) {
 			if(typeof config.callback == "function") config.callback(data);
 			console.log("ajaxStuff callback: ", data);
