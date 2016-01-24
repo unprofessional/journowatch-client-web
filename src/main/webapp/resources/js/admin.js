@@ -130,6 +130,10 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 //			callback: function(data) {
 //				// do nothing?
 //			},
+			headers:{
+				//"Content-Type":"application/json",
+				"cors":"cors"
+					},
 			dataType:"json",
 		  	data:formData
 		  });
