@@ -103,15 +103,32 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 	  };
 	  // TODO: createUser() and deleteUser()
 	  $scope.updateUser = function() {
-		  var uuid = document.getElementById("uuid").value;
-		  // TODO: Should we use UUID here?
 		  console.log("updateUser() hit!");
+		  
+		  var username = document.getElementById("username").value;
+		  var uuid = document.getElementById("uuid").value;
+		  var email = document.getElementById("email").value;
+		  var firstname = document.getElementById("firstname").value;
+		  var lastname = document.getElementById("lastname").value;
+		  var role = document.getElementById("role").value;; // Maybe pass int
+		  
+		  var formData = {
+				  username:username,
+				  uuid:uuid,
+				  email:email,
+				  firstname:firstname,
+				  lastname:lastname,
+				  role:role
+		  };
+		  
 		  ajaxStuff({
-			  type:"PUT",
-			  url:baseUrl + "/user/" + username,
-			  callback: function(data) {
-				  
-			  }
+			type:"PUT",
+			url:baseUrl + "/user/" + username,
+//			callback: function(data) {
+//				// do nothing?
+//			},
+			dataType:"json",
+		  	data:formData
 		  });
 	  };
 });
@@ -138,6 +155,8 @@ function ajaxStuff(config) {
 	return $.ajax({
 		type:config.type,
 		url:config.url,
+		dataType:config.dataType,
+		data:config.data,
 		success: function(data) {
 			if(typeof config.callback == "function") config.callback(data);
 			console.log("ajaxStuff callback: ", data);
