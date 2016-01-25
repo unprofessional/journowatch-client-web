@@ -18,10 +18,10 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 		controller:'navigation'
 	}).otherwise('/');
 	
-	// CORS stuff
-	$httpProvider.defaults.useXDomain = true;
-	//$httpProvider.defaults.headers.common["X-Requested-With"]='XMLHttpRequest';
-	delete $httpProvider.defaults.headers.common["X-Requested-With"];
+	// CORS stuff: only if using angular's built-in $http (see notes below on $http)
+	//$httpProvider.defaults.useXDomain = true;
+	//delete $httpProvider.defaults.headers.common["X-Requested-With"];
+	$httpProvider.defaults.headers.common["X-Requested-With"]='XMLHttpRequest';
 	
 }).controller('navigation', 
 		function($rootScope, $scope, $http, $location) {
@@ -32,14 +32,14 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 	        + btoa(credentials.username + ":" + credentials.password)
 	    } : {};
 	    
-	    // [-me]
 	    console.log("navigation headers: ", headers);
 
 	    // This reads JSON data from the provided URL
 	    
-	    // XXX
-	    // TODO: is this even correct?  no idea what i'm doing here
-	    // XXX
+	    /*
+	     * $http is angular's way of doing ajax requests:
+	     * $http.{$METHOD}($ajax params like url, headers, success, etc){}
+	     */
 	    $http.get('portal', {headers : headers}).success(function(data) {
 	    	
 	    	//console.log("navigation data: ", data)
@@ -124,16 +124,11 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 				  role:role
 		  };
 		  
+		  console.log("formData: ", formData);
+		  
 		  ajaxStuff({
 			type:"PUT",
 			url:baseUrl + "/user/" + username,
-//			callback: function(data) {
-//				// do nothing?
-//			},
-//			headers:{
-//				//"Content-Type":"application/json",
-//				"cors":"cors"
-//					},
 			dataType:"json",
 		  	data:formData
 		  });
@@ -163,15 +158,13 @@ function ajaxStuff(config) {
 		type:config.type,
 		url:config.url,
 		dataType:config.dataType,
-		data:config.data,
+		data:JSON.stringify(config.data), // Will always be JSON, so setting this here is okay
 		
-		contentType: "application/json; charset=utf-8",
-		crossDomain:true,
-		headers: { 'Access-Control-Allow-Origin': '*' },
-		
-		//origin:"",
+		contentType: "application/json",
+
 		success: function(data) {
 			if(typeof config.callback == "function") config.callback(data);
+			// Print response from server
 			console.log("ajaxStuff callback: ", data);
 		}
 	});
