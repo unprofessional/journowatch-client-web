@@ -1,40 +1,70 @@
 <br>
-<div id="error-thing" class="alert alert-danger" ng-show="error">You must enter a user!</div>
+<div id="error-thing" class="alert alert-danger" ng-show="error">
+	<label id="error-thing-msg">You must enter a user!</label>
+	<label id="error-thing-link" style='margin-left:25px;visibility:hidden'>
+		<a href="#/adduser" class="btn btn-primary">ADD USER?</a>
+	</label>
+</div>
 <form role="form" ng-submit="getUser()">
 
 	<br>
 	<div class="form-group">
 		<label for="username">Look up username:</label> <input type="text"
 			class="form-control" id="username" name="username"
-			ng-model="user.username" />
+			ng-model="user.username" autofocus="autofocus" />
 	</div>
-<!-- 	<button type="submit" class="btn btn-primary" onclick="setHidden()">Hide</button> -->
-<!-- 	<button type="submit" class="btn btn-primary" onclick="setVisible()">Show</button> -->
-<!-- 	<button type="submit" class="btn btn-primary" onclick="getUser()" >Submit</button> -->
-	<button type="submit" class="btn btn-primary" >Submit</button>
+	<!-- 	<button type="submit" class="btn btn-primary" onclick="setHidden()">Hide</button> -->
+	<!-- 	<button type="submit" class="btn btn-primary" onclick="setVisible()">Show</button> -->
+	<!-- 	<button type="submit" class="btn btn-primary" onclick="getUser()" >Submit</button> -->
+	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <form role="form" ng-submit="updateUser()">
-	<br><hr><br>
-	<div id="user-results" class="form-group" style="visibility:hidden;">
-	<p><label for="uuid">uuid (read-only):</label> <input type="text"
-			class="form-control" id="uuid" name="uuid"
-			ng-model="user.uuid" readonly/></p>
-	<p><label for="email">email:</label> <input type="email"
-			class="form-control" id="email" name="email"
-			ng-model="user.email" required/></p>
-	<p><label for="firstname">first name:</label> <input type="text"
-			class="form-control" id="firstname" name="firstname"
-			ng-model="user.firstname" required/></p>
-	<p><label for="lastname">last name:</label> <input type="text"
-			class="form-control" id="lastname" name="lastname"
-			ng-model="user.lastname" required/></p>
-	<p><label for="role">role:</label> <input type="text"
-			class="form-control" id="role" name="role"
-			ng-model="user.role" required/></p>
-	<p><button type="submit" class="btn btn-primary">Submit Changes</button></p>
+	<br>
+	<hr>
+	<br>
+	<div id="user-results" class="form-group" style="visibility: hidden;">
+		<p>
+			<label for="uuid">uuid (read-only):</label> <input type="text"
+				class="form-control" id="uuid" name="uuid" ng-model="user.uuid"
+				readonly />
+		</p>
+		<p>
+			<label for="email">email:</label> <input type="email"
+				class="form-control" id="email" name="email" ng-model="user.email"
+				required />
+		</p>
+		<p>
+			<label for="firstname">first name:</label> <input type="text"
+				class="form-control" id="firstname" name="firstname"
+				ng-model="user.firstname" required />
+		</p>
+		<p>
+			<label for="lastname">last name:</label> <input type="text"
+				class="form-control" id="lastname" name="lastname"
+				ng-model="user.lastname" required />
+		</p>
+		<p>
+			<label for="role">role:</label> <input type="text"
+				class="form-control" id="role" name="role" ng-model="user.role"
+				required />
+		</p>
+		<div style="width: 100%">
+			<div style="width: 45%; float: left; text-align: left">
+				<button id="userSubmitBtn" type="submit" class="btn btn-primary">Submit
+					Changes</button>
+			</div>
+			<div style="width: 45%; float: right; text-align: right">
+				<button id="deleteUserBtn" type="button" class="btn btn-primary"
+					style="background: red;" ng-click="deleteUser()">Delete
+					User</button>
+			</div>
+		</div>
 	</div>
 </form>
-	
-	<br><hr><br>
-	Step 1) List/Table of all users<br>
-	Step 2) Paginated list (see next 10, etc)
+
+<br>
+<hr>
+<br>
+Step 1) List/Table of all users
+<br>
+Step 2) Paginated list (see next 10, etc)
