@@ -107,12 +107,14 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 				  type:"POST",
 				  url:baseUrl + "/user/",
 				  dataType:"json",
-				  data:formData
+				  data:formData,
+				  callback: function() {
+					  // TODO: Implement some kind of success or failure confirmation
+				  }
 			  });
 		  } else {
 			  console.log("Passwords do not match!");
 			  $scope.error = true;
-			  
 		  }
 	  };
 	  $scope.getUser = function() {
@@ -254,26 +256,6 @@ function clearFields() {
 	for(var k in fieldsInList) {
 		document.getElementById(fieldsInList[k]).value = "";
 	}
-}
-
-// TODO: This needs to be in the angular module's $scope later
-function addUser() {
-	console.log("addUser() button clicked!")
-	  // TODO: Show form
-	  // TODO: Show password field (with confirmation)
-	  setVisible();
-	  clearFields();
-	  
-	  document.getElementById("deleteUserBtn").style.visibility = "hidden";
-	  document.getElementById("userSubmitBtn").textContent = "Create User";
-	  
-	  /*
-	   * TODO:
-	   * 1) Create new HTML form entirely, leveraging Angular's SPA
-	   * 2) Wrest control back to Angular by giving the new HTML form its own controller
-	   * 3) Keep things in $scope
-	   */
-	  
 }
 
 function ajaxStuff(config) {
