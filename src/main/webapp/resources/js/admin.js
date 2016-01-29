@@ -79,7 +79,6 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 		  console.log("$scope.createUser hit!");
 		  
 		  var username = document.getElementById("username").value;
-		  //var uuid = document.getElementById("uuid").value;
 		  var email = document.getElementById("email").value;
 		  var firstname = document.getElementById("firstname").value;
 		  var lastname = document.getElementById("lastname").value;
@@ -87,12 +86,15 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 		  var password1 = document.getElementById("password1").value;
 		  var password2 = document.getElementById("password2").value;
 		  
+		  var modalText = document.getElementById("modal-txt");
+		  
+		  console.log("(start) -> modalText.textContent: ", modalText.textContent);
+		  
 		  if(password1 === password2) {
 			  console.log("Passwords match!");
 			  $scope.error = false;
 			  var formData = {
 					  username:username,
-					  //uuid:uuid,
 					  email:email,
 					  firstname:firstname,
 					  lastname:lastname,
@@ -102,20 +104,34 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 			  
 			  ajaxStuff({
 				  
-				// !!! TODO: Need to go back to the API side and implement checkUserExists() !!!
+				// TODO: Need to go back to the API side and implement checkUserExists() !!!
+				// XXX: In the meantime, made 'username' and 'email' UNIQUE constrained, so Postgres errors if duplicate creation attempted
 				  
 				  type:"POST",
 				  url:baseUrl + "/user/",
 				  dataType:"json",
 				  data:formData,
-				  callback: function() {
-					  // TODO: Implement some kind of success or failure confirmation
+				  callback: function(data) {
+					  console.log("createUser() -> data: ", data);
+					  
+					  if(data == true) {
+						  modalText.textContent = "User created!";
+						  showModal();
+						  console.log("User created.")
+						  // TODO: OK button should take you to search/update
+					  } else {
+						  modalText.textContent = "Could not create user!";
+						  showModal();
+						  console.log("Could not create user. Doing nothing.")
+					  }
+					  console.log("(ajax) -> modalText.textContent: ", modalText.textContent);
 				  }
 			  });
 		  } else {
 			  console.log("Passwords do not match!");
 			  $scope.error = true;
 		  }
+		  console.log("(end) -> modalText.textContent: ", modalText.textContent);
 	  };
 	  $scope.getUser = function() {
 		  var username = document.getElementById("username").value;
@@ -140,7 +156,6 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 							$scope.$apply(function(){
 								$scope.error = false;
 							});
-							//console.log("AJAX $scope.error: ", $scope.error);
 						} else {
 							setHidden();
 							console.log("uuid is null! Set the error div!");
@@ -150,7 +165,6 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 							$scope.$apply(function(){
 								$scope.error = true;
 							});
-							//console.log("AJAX $scope.error: ", $scope.error);
 						}
 				  }
 			  });
@@ -192,32 +206,18 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 		   * need to get the user first via username and return UUID or we implement
 		   * a DELETE /user/{uuid} API endpoint
 		   */ 
-		  
-		  // TODO: Get the confirm modal working
-//		  $(".confirm").confirm({
-//			  text: "Are you sure you want to delete that comment?",
-//			  title: "Confirmation required",
-//			  confirm: function(button) {
-//				  console.log("BOOYAHASJKAJSK");
-//			  },
-//			  cancel: function(button) {
-//				  // do nothing
-//			  },
-//			  confirmButton: "Yes",
-//			  cancelButton: "No"
-//		  });
-		  
-		  var choice = confirm("Are you sure you want to delete this user?");
-		  if(choice === true) {
-			  console.log("yes");
-			  ajaxStuff({
-				  type:"DELETE",
-				  url:baseUrl + "/user/" + username
-				  // This should be all we need...
-			  });
-		  } else{
-			  console.log("no");
-		  }
+
+		  ajaxStuff({
+			  type:"DELETE",
+			  url:baseUrl + "/user/" + username,
+			  // This should be all we need...
+			  callback:function() {
+				  closeModal();
+				  clearFields();
+				  setHidden();
+				  // TODO: Maybe call a secondary modal that says "User deleted?"
+			  }
+		  });
 	  };
 });
 

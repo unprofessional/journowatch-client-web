@@ -1,6 +1,6 @@
+<link href="resources/css/modal.css" rel="stylesheet">
 <div id="error-thing" class="alert alert-danger" ng-show="error">
 	<label id="error-thing-msg">Passwords do not match!</label>
-	</label>
 </div>
 <form role="form" ng-submit="createUser()">
 	<br><br>
@@ -28,7 +28,7 @@
 			ng-model="user.password2" required/></p>
 	<div style="width:100%">
 		<div style="width:45%;float:left;text-align:left">
-			<button id="userSubmitBtn" type="submit" class="btn btn-primary">Submit Changes</button>
+			<button id="userSubmitBtn" type="submit" class="btn btn-primary">CREATE User</button>
 		</div>
 		<div style="width:45%;float:right;text-align:right">
 			Delete button used to be here
@@ -39,4 +39,20 @@
 	
 	<br><hr><br>
 	Step 1) List/Table of all users<br>
-	Step 2) Paginated list (see next 10, etc)
+	Step 2) Paginated list (see next 10, etc)<br><br>
+
+<!-- Trigger/Open The Modal -->
+<p><button id="myBtn">Open Modal 2</button></p>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content" style="text-align:center">
+<!--     <span class="close">x</span> -->
+    <p><span id="modal-txt">Some text in the Modal..</span></p>
+    <p><button id="close-btn" class="btn btn-primary">OK</button></p>
+  </div>
+
+</div>
+<script src="resources/js/modal.js"></script>
