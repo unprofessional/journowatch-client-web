@@ -17,9 +17,11 @@
 	<p><label for="lastname">last name:</label> <input type="text"
 			class="form-control" id="lastname" name="lastname"
 			ng-model="user.lastname" required/></p>
-	<p><label for="role">role:</label> <input type="text"
-			class="form-control" id="role" name="role"
-			ng-model="user.role" required/></p>
+	<p>
+		<label for="role">role:</label>
+		<select id="role" ng-model="user.role" ng-options="role as role.label for role in roles track by role.id" ng-init="user.role = roles[1]">
+		</select>
+	</p>
 	<p><label for="password1">password:</label> <input type="password"
 			class="form-control" id="password1" name="password1"
 			ng-model="user.password1" required/></p>

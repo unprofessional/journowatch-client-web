@@ -1,6 +1,7 @@
 var baseUrl = "http://journowatchapi-sjw.rhcloud.com";
 
-var fieldsInList = { uuid:"uuid", email:"email", firstname:"firstname", lastname:"lastname", role:"role" };
+var fieldsInList = { uuid:"uuid", email:"email", firstname:"firstname", lastname:"lastname", role:"role"};
+	//, roledropdown:"role" };
 
 var firstModule = angular.module('admin', [ 'ngRoute' ])
 .config(function($routeProvider, $httpProvider) {
@@ -101,6 +102,8 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 					  role:role, // Default is ROLE_USER
 					  password:password1
 			  };
+			  
+			  console.log("formData: ", formData);
 			  
 			  ajaxStuff({
 				  
@@ -219,6 +222,13 @@ var firstModule = angular.module('admin', [ 'ngRoute' ])
 			  }
 		  });
 	  };
+	  $scope.roles = [{
+		  	id: 1,
+		  	label: "ROLE_ADMIN"
+	  	},{
+			id: 2,
+			label: "ROLE_USER"
+	  }];
 });
 
 /* 
@@ -250,6 +260,11 @@ function setText(respObj) {
 	for(var k in fieldsInList) {
 		document.getElementById(fieldsInList[k]).value = respObj[k];
 	}
+//	if(respObj.role == 2) {
+//		document.getElementById("role-dropdown").value = "ROLE_USER";
+//	} else if(respObj.role == 1) {
+//		document.getElementById("role-dropdown").value = "ROLE_ADMIN";
+//	}
 }
 
 function clearFields() {

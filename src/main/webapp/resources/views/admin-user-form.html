@@ -6,6 +6,7 @@
 		<a href="#/adduser" class="btn btn-primary">ADD USER?</a>
 	</label>
 </div>
+<!-- !!!!!!!!!!!!!! GREY OUT THIS BUTTON UNTIL THE AJAX REQUEST IS COMPLETED !!!!!!!!!!!!!!! -->
 <form role="form" ng-submit="getUser()">
 
 	<br>
@@ -44,11 +45,30 @@
 				class="form-control" id="lastname" name="lastname"
 				ng-model="user.lastname" required />
 		</p>
+<!-- 		<p> -->
+<!-- 			<label for="role">role:</label> <input type="text" -->
+<!-- 				class="form-control" id="role" name="role" ng-model="user.role" -->
+<!-- 				required /> -->
+<!-- 		</p> -->
+<!-- 		<br> -->
+<!-- 		<div class="dropdown"> -->
+<!-- 			<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example -->
+<!-- 			<span class="caret"></span></button> -->
+<!-- 			<ul class="dropdown-menu"> -->
+<!-- 				<li><a href="#">HTML</a></li> -->
+<!-- 				<li><a href="#">CSS</a></li> -->
+<!-- 				<li><a href="#">JavaScript</a></li> -->
+<!-- 			</ul>	 -->
+<!-- 		</div> -->
+		<!--  -->
 		<p>
-			<label for="role">role:</label> <input type="text"
-				class="form-control" id="role" name="role" ng-model="user.role"
-				required />
+		<label for="role">role:</label>
+		<select id="role">
+			<option value="1">ROLE_ADMIN</option>
+			<option value="2">ROLE_USER</option>
+		</select>
 		</p>
+		<!--  -->
 		<div style="width: 100%">
 			<div style="width: 45%; float: left; text-align: left">
 				<button id="userSubmitBtn" type="submit" class="btn btn-primary">Submit Changes</button>
